@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Create Project</h1>
+        <h1>Create Post</h1>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.projects.store') }}" method="POST">
+        <form action="{{ route('admin.posts.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
@@ -30,14 +30,6 @@
                     <option value="">Select Type</option>
                     @foreach($types as $type)
                         <option value="{{ $type->id }}">{{ $type->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="technologies" class="form-label">Technologies</label>
-                <select class="form-control" id="technologies" name="technologies[]" multiple>
-                    @foreach($technologies as $technology)
-                        <option value="{{ $technology->id }}">{{ $technology->name }}</option>
                     @endforeach
                 </select>
             </div>
