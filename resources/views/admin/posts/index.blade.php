@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <h1>Posts</h1>
-        <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Create Post</a>
+        <h1>Projects</h1>
+        <a href="{{ route('admin.projects.create') }}" class="btn btn-primary mb-3">Create Project</a>
         <table class="table">
             <thead>
                 <tr>
@@ -14,15 +14,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($posts as $post)
+                @foreach($projects as $project)
                     <tr>
-                        <td>{{ $post->id }}</td>
-                        <td>{{ $post->title }}</td>
-                        <td>{{ $post->description }}</td>
+                        <td>{{ $project->id }}</td>
+                        <td>{{ $project->title }}</td>
+                        <td>{{ $project->description }}</td>
                         <td>
-                            <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-info">View</a>
-                            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" style="display:inline;">
+                            <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-info">Show</a>
+                            <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning">Edit</a>
+                            <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
