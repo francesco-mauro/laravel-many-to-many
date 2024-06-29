@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Create Post</h1>
+        <h1>Create Project</h1>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -14,7 +14,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.posts.store') }}" method="POST">
+        <form action="{{ route('admin.projects.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
