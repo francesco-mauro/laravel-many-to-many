@@ -33,6 +33,14 @@
                     @endforeach
                 </select>
             </div>
+            <div class="mb-3">
+                <label for="technologies" class="form-label">Technologies</label>
+                <select class="form-control" id="technologies" name="technologies[]" multiple>
+                    @foreach($technologies as $technology)
+                        <option value="{{ $technology->id }}">{{ $technology->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

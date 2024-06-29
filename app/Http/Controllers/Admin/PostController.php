@@ -7,6 +7,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Type;
+use App\Models\Technology;
 
 class PostController extends Controller
 {
@@ -25,7 +26,8 @@ class PostController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.posts.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.posts.create', compact('types', 'technologies'));
     }
 
     /**
@@ -36,7 +38,9 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
-            'type_id' => 'nullable|exists:types,id'
+            'type_id' => 'nullable|exists:types,id',
+            'technologies' => 'nullable|array',
+            'technologies.*' => 'exists:technologies,id'
         ]);
 
         $newPost = new Post();
@@ -45,6 +49,8 @@ class PostController extends Controller
         $newPost->slug = Str::slug($request->title);
         $newPost->type_id = $request->type_id;
         $newPost->save();
+
+        $newPost->technologies()->sync($request->technologies);
 
         return redirect()->route('admin.posts.index');
     }
@@ -56,13 +62,15 @@ class PostController extends Controller
     {
         return view('admin.posts.show', compact('post'));
     }
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Post $post)
     {
         $types = Type::all();
-        return view('admin.posts.edit', compact('post', 'types'));
+        $technologies = Technology::all();
+        return view('admin.posts.edit', compact('post', 'types', 'technologies'));
     }
 
     /**
@@ -73,17 +81,22 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
-            'type_id' => 'nullable|exists:types,id'
+            'type_id' => 'nullable|exists:types,id',
+            'technologies' => 'nullable|array',
+            'technologies.*' => 'exists:technologies,id'
         ]);
-    
+
         $post->title = $request->title;
         $post->description = $request->description;
         $post->slug = Str::slug($request->title);
         $post->type_id = $request->type_id;
         $post->save();
-    
+
+        $post->technologies()->sync($request->technologies);
+
         return redirect()->route('admin.posts.index');
     }
+
     /**
      * Remove the specified resource from storage.
      */
